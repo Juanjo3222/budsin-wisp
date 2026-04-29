@@ -1,6 +1,6 @@
 import express from "express";
 import { createServer } from "http";
-import { WispServer } from "@mercuryworkshop/wisp-js/server";
+import { server as wisp } from "@mercuryworkshop/wisp-js/server";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -16,7 +16,10 @@ app.get("/", (req, res) => {
 });
 
 const server = createServer(app);
-const wispServer = new WispServer({ server, prefix: "/wisp/" });
+
+server.on("upgrade", (req, socket, head) => {
+  wisp.routeRequest(req, socket, head);
+});
 
 server.listen(PORT, () => {
   console.log(`Wisp server corriendo en puerto ${PORT}`);
