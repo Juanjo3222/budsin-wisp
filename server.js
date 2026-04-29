@@ -1,7 +1,7 @@
 import express from "express";
 import { createServer } from "http";
-import { WispServer } from "wisp-server-node";
-
+import pkg from "wisp-server-node";
+const { WispServer } = pkg;
 const app = express();
 const PORT = process.env.PORT || 8080;
 
